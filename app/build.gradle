@@ -28,13 +28,14 @@ android {
             ldLibs "vulkan"
             ldLibs "shaderc"
             ldLibs "gnustl_static"
-            ldLibs "VkLayer_threading"
-            ldLibs "VkLayer_parameter_validation"
-            ldLibs "VkLayer_object_tracker"
-            ldLibs "VkLayer_core_validation"
-            ldLibs "VkLayer_image"
-            ldLibs "VkLayer_swapchain"
-            ldLibs "VkLayer_unique_objects"
+            ldLibs "clblast"
+//            ldLibs "VkLayer_threading"
+//            ldLibs "VkLayer_parameter_validation"
+//            ldLibs "VkLayer_object_tracker"
+//            ldLibs "VkLayer_core_validation"
+//            ldLibs "VkLayer_image"
+//            ldLibs "VkLayer_swapchain"
+//            ldLibs "VkLayer_unique_objects"
 //            ldLibs.addAll(["android", "log"])
         }
         // Remove this block.

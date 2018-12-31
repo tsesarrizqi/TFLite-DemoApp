@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import org.tensorflow.lite.Interpreter;
+import java.util.concurrent.ThreadLocalRandom;
 
 /** Classifies images with Tensorflow Lite. */
 public class ImageClassifier {
@@ -152,11 +153,22 @@ public class ImageClassifier {
     return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
   }
 
+  private void generateRandomImage() {
+    int pixel = 0;
+    for (int i = 0; i < DIM_IMG_SIZE_X; ++i) {
+      for (int j = 0; j < DIM_IMG_SIZE_Y; ++j) {
+        intValues[pixel] = ThreadLocalRandom.current().nextInt(1, 100);
+        pixel++;
+      }
+    }
+  }
+
   /** Writes Image data into a {@code ByteBuffer}. */
   private void convertBitmapToByteBuffer(Bitmap bitmap) {
     if (imgData == null) {
       return;
     }
+    generateRandomImage();
 //    imgData.rewind();
     bitmap.getPixels(intValues, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
     // Convert the image to floating point.
@@ -171,6 +183,9 @@ public class ImageClassifier {
         imgData[0][i][j][0] = (val >> 16);
         imgData[0][i][j][1] = (val >> 8);
         imgData[0][i][j][2] = (val);
+//        imgData[0][i][j][0] = (i+j)%100;
+//        imgData[0][i][j][1] = (i+j+i)%100;
+//        imgData[0][i][j][2] = (i+j+i+j)%100;
       }
     }
     long endTime = SystemClock.uptimeMillis();
